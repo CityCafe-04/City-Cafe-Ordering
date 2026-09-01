@@ -19,37 +19,8 @@ header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid 
 .vendorTitle{display:flex;justify-content:space-between;align-items:center}.pill{font-size:12px;background:#f2f4f7;padding:5px 8px;border-radius:99px}.status{margin-top:10px;padding:10px;border-radius:8px;background:#f0fdf4;color:#166534;font-size:12px}
 .orderBox{display:none;background:#fff;border:1px solid #e1e5ea;border-radius:14px;padding:16px;margin-top:16px}.orderBox pre{white-space:pre-wrap;font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;background:#f8fafc;padding:12px;border-radius:8px}
 @media(max-width:1050px){.layout{grid-template-columns:1fr}.panel{display:block}.cart{position:static}.search{width:38vw}}
-</style>
-<style id="login-css">
-#loginScreen{position:fixed;inset:0;z-index:9999;background:#f5f7fa;display:flex;align-items:center;justify-content:center;padding:20px}
-.login-card{width:min(420px,100%);background:#fff;border:1px solid #e1e5ea;border-radius:18px;padding:30px;box-shadow:0 14px 45px rgba(0,0,0,.10)}
-.login-card h1{margin:0 0 8px;font-size:27px}.login-card p{color:#69727d;margin:0 0 22px}
-.login-card label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
-.login-card input{width:100%;padding:12px;border:1px solid #ccd2da;border-radius:9px;font:inherit}
-.login-btn{width:100%;margin-top:20px;padding:12px;border:0;border-radius:9px;background:#155eef;color:white;font-weight:800;cursor:pointer}
-.login-error{display:none;margin-top:12px;padding:10px;border-radius:8px;background:#fff1f1;color:#b42318;font-size:13px}
-.logout-btn{border:1px solid #ccd2da;background:#fff;padding:8px 11px;border-radius:8px;font-weight:700;cursor:pointer}
-.user-pill{font-size:12px;color:#475467;background:#f2f4f7;padding:7px 10px;border-radius:999px}
-</style>
-</head>
+</style></head>
 <body>
-
-<div id="loginScreen">
-  <div class="login-card">
-    <h1>City Cafe Ordering</h1>
-    <p>Private Vendor Ordering System</p>
-    <form id="loginForm">
-      <label for="loginUser">Username</label>
-      <input id="loginUser" autocomplete="username" placeholder="Enter username" required>
-      <label for="loginPass">Password</label>
-      <input id="loginPass" type="password" autocomplete="current-password" placeholder="Enter password" required>
-      <button class="login-btn" type="submit">Log In</button>
-      <div id="loginError" class="login-error">Incorrect username or password.</div>
-    </form>
-    <p style="font-size:12px;margin-top:18px">Demo admin account: <b>admin</b> / <b>CityCafe2026!</b></p>
-  </div>
-</div>
-
 <header><div class="logo">Private Vendor Ordering</div><div class="private">PRIVATE</div><input id="search" class="search" placeholder="Search vendor items…"></header>
 <div class="layout">
 <aside class="panel"><h3 style="margin-top:0">Vendors</h3><div id="vendors"></div>
@@ -105,40 +76,4 @@ function prepareOrder(){
  else document.getElementById('status').innerHTML='<div class="status">Order prepared and copied. Add the vendor email address when you have it; no email address was visible on the supplied sheet.</div>';
 }
 render();
-</script>
-<script>
-(function(){
-  const USERNAME = "admin";
-  const PASSWORD = "CityCafe2026!";
-  const screen = document.getElementById("loginScreen");
-  const form = document.getElementById("loginForm");
-  const err = document.getElementById("loginError");
-
-  function showApp(){
-    screen.style.display = "none";
-    document.body.classList.add("authenticated");
-  }
-
-  function logout(){
-    sessionStorage.removeItem("cityCafeLoggedIn");
-    location.reload();
-  }
-
-  if(sessionStorage.getItem("cityCafeLoggedIn") === "true") showApp();
-
-  form.addEventListener("submit", function(e){
-    e.preventDefault();
-    const u = document.getElementById("loginUser").value.trim();
-    const p = document.getElementById("loginPass").value;
-    if(u === USERNAME && p === PASSWORD){
-      sessionStorage.setItem("cityCafeLoggedIn","true");
-      showApp();
-    } else {
-      err.style.display = "block";
-    }
-  });
-
-  window.cityCafeLogout = logout;
-})();
-</script>
-</body></html>
+</script></body></html>
