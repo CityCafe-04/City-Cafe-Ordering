@@ -63,6 +63,7 @@ header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid 
 <div class="field"><label class="hint">Ordered by</label><input id="buyer" placeholder="Name"></div>
 <div class="field"><label class="hint">Delivery / notes</label><textarea id="notes" rows="3" placeholder="Delivery date or special instructions"></textarea></div>
 <button class="send" onclick="prepareOrder()">Prepare & Email Order</button>
+<div class="hint" style="margin-top:8px">Order summary will be emailed to <b>Vendors@citycafekosher.com</b>.</div>
 <button class="secondary" onclick="clearCart()">Clear Current Order</button>
 <div id="status"></div></section>
 </div>
@@ -100,9 +101,12 @@ function prepareOrder(){
  lines.push('','NOTES:',notes);
  let text=lines.join('\\n');document.getElementById('orderText').textContent=text;document.getElementById('orderBox').style.display='block';
  navigator.clipboard?.writeText(text).catch(()=>{});
- let email=vendorEmails[vendor];
- if(email){location.href='mailto:'+email+'?subject='+encodeURIComponent('New '+vendor+' Order')+'&body='+encodeURIComponent(text);document.getElementById('status').innerHTML='<div class="status">Order prepared and email opened.</div>'}
- else document.getElementById('status').innerHTML='<div class="status">Order prepared and copied. Add the vendor email address when you have it; no email address was visible on the supplied sheet.</div>';
+ let vendorEmail=vendorEmails[vendor];
+ let subject='City Cafe Order - '+vendor;
+ let to=CITY_CAFE_SUMMARY_EMAIL;
+ let cc=vendorEmail ? '&cc='+encodeURIComponent(vendorEmail) : '';
+ location.href='mailto:'+encodeURIComponent(to)+'?subject='+encodeURIComponent(subject)+cc+'&body='+encodeURIComponent(text);
+ document.getElementById('status').innerHTML='<div class="status">Order prepared. Email summary opened to <b>'+CITY_CAFE_SUMMARY_EMAIL+'</b>'+(vendorEmail?' with '+vendor+' copied.':'')+'.</div>';
 }
 render();
 </script>
